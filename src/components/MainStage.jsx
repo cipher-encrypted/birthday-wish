@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import MemoryLane from './MemoryLane'
 import InsideJokes from './InsideJokes'
+import SecretLetter from './SecretLetter'
 
 /* ─── Glowing Sakura Section Divider ─────────────────────────────────── */
 function SakuraDivider({ label }) {
@@ -361,13 +362,20 @@ export default function MainStage() {
       <InsideJokes />
 
       {/* ══════════════════════════════════════════════════════════════
-          4. UPCOMING STAGES PREVIEW (STAGES 3 & 4)
+          4. STAGE 3: THE SECRET LETTER (3D WAX SEAL & STATIONERY)
           ══════════════════════════════════════════════════════════════ */}
-      <SakuraDivider label="The Journey Ahead" />
+      <SakuraDivider label="A Handwritten Note From the Heart" />
+      <SecretLetter />
+
+      {/* ══════════════════════════════════════════════════════════════
+          5. UPCOMING STAGE PREVIEW (STAGE 4: THE GRAND FINALE)
+          ══════════════════════════════════════════════════════════════ */}
+      <SakuraDivider label="The Grand Finale Awaits" />
       <section
+        id="upcoming-stages"
         style={{
           padding: '40px 24px 100px',
-          maxWidth: '960px',
+          maxWidth: '680px',
           margin: '0 auto',
         }}
       >
@@ -376,7 +384,7 @@ export default function MainStage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: 'center', marginBottom: '56px' }}
+          style={{ textAlign: 'center', marginBottom: '48px' }}
         >
           <h2
             style={{
@@ -388,7 +396,7 @@ export default function MainStage() {
               marginBottom: '12px',
             }}
           >
-            Upcoming Chapters 🗺️
+            The Final Chapter 🗺️
           </h2>
           <p
             style={{
@@ -401,32 +409,18 @@ export default function MainStage() {
               lineHeight: 1.6,
             }}
           >
-            Two more magical stages await to be unlocked in your enchanted birthday adventure...
+            One last extraordinary moment remains to crown this birthday celebration...
           </p>
         </motion.div>
 
-        {/* 2 upcoming cards */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '28px',
-          }}
-        >
-          <UpcomingStageCard
-            number="3"
-            icon="💌"
-            title="The Secret Letter"
-            description="A 3D wax-sealed parchment envelope containing a heartfelt message inscribed with glowing golden ink."
-            delay={0.1}
-            color="#ce93d8"
-          />
+        {/* Final stage card */}
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
           <UpcomingStageCard
             number="4"
             icon="🎂"
             title="The Grand Finale"
-            description="An interactive 3D birthday cake with flickering candles you can blow out to trigger sakura fireworks!"
-            delay={0.25}
+            description="An interactive 3D birthday cake with flickering candles you can blow out to trigger a symphony of sakura confetti and fireworks!"
+            delay={0.15}
             color="#d4af7a"
           />
         </div>

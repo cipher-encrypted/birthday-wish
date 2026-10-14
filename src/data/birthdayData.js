@@ -160,3 +160,19 @@ export const insideJokesData = [
     themeColor: '#d4af7a',
   },
 ]
+
+/**
+ * 💌 STAGE 3: The Secret Letter & Heartfelt Message
+ */
+export const letterData = {
+  envelopePrompt: 'A note sealed with love & cherry blossoms...',
+  salutation: 'Dearest Bestie,',
+  paragraphs: [
+    'As another year turns in your journey, I wanted to take a quiet moment amidst all the noise to tell you just how profoundly grateful I am to have you in my life. Some people walk into this world and make it a little more bearable; you walked in and made it feel entirely like magic.',
+    'Thank you for being my anchor when life feels chaotic, and my partner in crime whenever there is joy to be had. Through every late-night conversation, every tear, and every unhinged belly laugh that left us gasping for air on kitchen floors, you have shown me what unconditional friendship truly looks like.',
+    'On this special day, my wish for you is boundless peace, overflowing joy, and the relentless courage to chase every single dream your beautiful heart desires. Never forget how loved, how worthy, and how utterly irreplaceable you are. May this year bring you all the wonder you give so effortlessly to everyone else.',
+  ],
+  signOff: 'Always in your corner,',
+  senderName: 'Your Favorite Human 🌸',
+  psNote: "P.S. Keep scrolling after reading... there's a cake waiting for your wish! 🎂",
+}
