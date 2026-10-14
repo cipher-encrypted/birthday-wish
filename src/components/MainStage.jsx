@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import MemoryLane from './MemoryLane'
 import InsideJokes from './InsideJokes'
 import SecretLetter from './SecretLetter'
+import BirthdayCakeFinale from './BirthdayCakeFinale'
 
 /* ─── Glowing Sakura Section Divider ─────────────────────────────────── */
 function SakuraDivider({ label }) {
@@ -53,117 +54,6 @@ function SakuraDivider({ label }) {
   )
 }
 
-/* ─── Upcoming Stage Preview Card ────────────────────────────────────── */
-function UpcomingStageCard({ number, icon, title, description, delay, color }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.8, ease: 'easeOut', delay }}
-      whileHover={{ y: -8, scale: 1.02 }}
-      style={{ cursor: 'default' }}
-      className="w-full"
-    >
-      <div
-        className="glass"
-        style={{
-          padding: '44px 36px',
-          borderRadius: '26px',
-          textAlign: 'center',
-          position: 'relative',
-          overflow: 'hidden',
-          border: `1px solid ${color}45`,
-          boxShadow: `0 8px 35px ${color}20, 0 0 0 1px ${color}15`,
-          transition: 'all 0.4s ease',
-          background: 'rgba(255, 255, 255, 0.45)',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
-        }}
-      >
-        {/* Background glow */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: `radial-gradient(ellipse at 50% 0%, ${color}22 0%, transparent 70%)`,
-            pointerEvents: 'none',
-          }}
-        />
-
-        {/* Stage number */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '16px',
-            right: '20px',
-            fontFamily: 'var(--font-heading)',
-            fontSize: '0.75rem',
-            color: `${color}`,
-            fontWeight: 700,
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-          }}
-        >
-          Stage {number}
-        </div>
-
-        {/* Icon */}
-        <div style={{ fontSize: '3.2rem', marginBottom: '18px', lineHeight: 1 }}>
-          {icon}
-        </div>
-
-        {/* Title */}
-        <h3
-          style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: 'clamp(1.4rem, 2.8vw, 1.85rem)',
-            fontWeight: 600,
-            color: '#5a3040',
-            marginBottom: '12px',
-            letterSpacing: '-0.01em',
-          }}
-        >
-          {title}
-        </h3>
-
-        {/* Description */}
-        <p
-          style={{
-            fontFamily: 'var(--font-body)',
-            fontSize: 'clamp(0.85rem, 1.5vw, 0.92rem)',
-            color: '#8a5070',
-            lineHeight: 1.7,
-            maxWidth: '340px',
-            margin: '0 auto 24px',
-          }}
-        >
-          {description}
-        </p>
-
-        {/* Coming soon pill */}
-        <div
-          style={{
-            display: 'inline-block',
-            padding: '6px 18px',
-            borderRadius: '50px',
-            background: `${color}18`,
-            border: `1px solid ${color}50`,
-            fontFamily: 'var(--font-body)',
-            fontSize: '0.72rem',
-            color: `${color}`,
-            fontWeight: 600,
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-          }}
-        >
-          ✨ Next In Line
-        </div>
-      </div>
-    </motion.div>
-  )
-}
-
 /* ─── Floating Decorative Elements ───────────────────────────────────── */
 function FloatingPetal({ top, left, delay, size }) {
   return (
@@ -187,7 +77,7 @@ function FloatingPetal({ top, left, delay, size }) {
 }
 
 /* ─── Main Stage Component ───────────────────────────────────────────── */
-export default function MainStage() {
+export default function MainStage({ onReplay }) {
   return (
     <div
       className="main-scroll"
@@ -368,91 +258,10 @@ export default function MainStage() {
       <SecretLetter />
 
       {/* ══════════════════════════════════════════════════════════════
-          5. UPCOMING STAGE PREVIEW (STAGE 4: THE GRAND FINALE)
+          5. STAGE 4: THE GRAND FINALE (3D CAKE & FIREWORKS)
           ══════════════════════════════════════════════════════════════ */}
-      <SakuraDivider label="The Grand Finale Awaits" />
-      <section
-        id="upcoming-stages"
-        style={{
-          padding: '40px 24px 100px',
-          maxWidth: '680px',
-          margin: '0 auto',
-        }}
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          style={{ textAlign: 'center', marginBottom: '48px' }}
-        >
-          <h2
-            style={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(2rem, 5vw, 3.2rem)',
-              fontWeight: 700,
-              color: '#5a3040',
-              letterSpacing: '-0.02em',
-              marginBottom: '12px',
-            }}
-          >
-            The Final Chapter 🗺️
-          </h2>
-          <p
-            style={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-              fontStyle: 'italic',
-              color: '#8a5070',
-              maxWidth: '460px',
-              margin: '0 auto',
-              lineHeight: 1.6,
-            }}
-          >
-            One last extraordinary moment remains to crown this birthday celebration...
-          </p>
-        </motion.div>
-
-        {/* Final stage card */}
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <UpcomingStageCard
-            number="4"
-            icon="🎂"
-            title="The Grand Finale"
-            description="An interactive 3D birthday cake with flickering candles you can blow out to trigger a symphony of sakura confetti and fireworks!"
-            delay={0.15}
-            color="#d4af7a"
-          />
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════════
-          5. FOOTER
-          ══════════════════════════════════════════════════════════════ */}
-      <motion.footer
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        style={{
-          textAlign: 'center',
-          padding: '48px 24px',
-          borderTop: '1px solid rgba(244,143,177,0.2)',
-          background: 'rgba(255, 255, 255, 0.2)',
-          backdropFilter: 'blur(10px)',
-        }}
-      >
-        <p
-          style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: 'clamp(0.95rem, 2vw, 1.15rem)',
-            fontStyle: 'italic',
-            color: '#b76e79',
-          }}
-        >
-          Crafted with endless love &amp; stardust ✨ &nbsp;·&nbsp; 🌸 Forever &amp; Always
-        </p>
-      </motion.footer>
+      <SakuraDivider label="The Grand Finale & Birthday Wish" />
+      <BirthdayCakeFinale onReplayApp={onReplay} />
     </div>
   )
 }

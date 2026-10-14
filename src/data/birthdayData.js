@@ -176,3 +176,16 @@ export const letterData = {
   senderName: 'Your Favorite Human 🌸',
   psNote: "P.S. Keep scrolling after reading... there's a cake waiting for your wish! 🎂",
 }
+
+/**
+ * 🎂 STAGE 4: The Grand Finale & Birthday Cake
+ */
+export const finaleData = {
+  preWishHeading: 'Make a Birthday Wish ✨',
+  preWishSubtext:
+    'Close your eyes, make a heartfelt wish, and tap the candles (or blow into your mic!) to blow them out...',
+  postWishHeading: 'Happy Birthday, Bestie! 🎉🌸',
+  postWishMessage:
+    'May every single wish you whispered today come true in the most magical ways. Here’s to another year of laughter, wild adventures, peace, and unforgettable memories together!',
+  footerCredit: 'Crafted with 🌸 & endless appreciation by Your Favorite Human',
+}

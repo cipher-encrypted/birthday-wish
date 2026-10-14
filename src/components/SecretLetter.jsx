@@ -489,7 +489,7 @@ function LetterStationery({
         }}
       >
         <a
-          href="#upcoming-stages"
+          href="#birthday-cake"
           style={{
             display: 'inline-flex',
             alignItems: 'center',
