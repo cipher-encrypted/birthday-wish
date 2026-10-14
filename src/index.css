@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --blush: #fce4ec;
+  --cream: #fff8f8;
+  --lavender: #f3e5f5;
+  --sakura: #f48fb1;
+  --sakura-deep: #e91e8c;
+  --rose-gold: #b76e79;
+  --gold: #d4af7a;
+  --petal-pink: #ffb7c5;
+  --soft-purple: #ce93d8;
+  --font-heading: 'Cormorant Garamond', 'Playfair Display', serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  background: linear-gradient(135deg, #fce4ec 0%, #fff8f8 50%, #f3e5f5 100%);
+  color: #5a3040;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Scrollable Main Stage ─────────────────────────────────────────── */
+.main-scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100vh;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #f48fb180 transparent;
+}
+
+.main-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.main-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.main-scroll::-webkit-scrollbar-thumb {
+  background: #f48fb180;
+  border-radius: 4px;
+}
+
+/* ─── Glassmorphism Utilities ────────────────────────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 20px;
+}
+
+.glass-dark {
+  background: rgba(180, 80, 110, 0.12);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(244, 143, 177, 0.25);
+  border-radius: 20px;
+}
+
+/* ─── Glow Utilities ─────────────────────────────────────────────────── */
+.glow-pink {
+  text-shadow: 0 0 20px rgba(244, 143, 177, 0.8), 0 0 40px rgba(244, 143, 177, 0.4);
+}
+
+.glow-gold {
+  text-shadow: 0 0 20px rgba(212, 175, 122, 0.9), 0 0 40px rgba(212, 175, 122, 0.5);
+}
+
+/* ─── Floating Animation ─────────────────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%       { transform: translateY(-12px) rotate(1deg); }
+  66%       { transform: translateY(-6px) rotate(-0.5deg); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-18px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(244, 143, 177, 0.4), 0 0 40px rgba(244, 143, 177, 0.2); }
+  50%       { box-shadow: 0 0 35px rgba(244, 143, 177, 0.7), 0 0 70px rgba(244, 143, 177, 0.4); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes soundwave {
+  0%, 100% { transform: scaleY(0.4); }
+  50%       { transform: scaleY(1.0); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50%       { opacity: 1; transform: scale(1.2); }
+}
+
+/* ─── Shimmer Text ─────────────────────────────────────────────────────  */
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #b76e79 0%,
+    #f48fb1 25%,
+    #d4af7a 50%,
+    #f48fb1 75%,
+    #b76e79 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+/* ─── Stage Placeholder Cards ─────────────────────────────────────────── */
+.stage-placeholder {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* ─── Cursor custom ─────────────────────────────────────────────────── */
+.cursor-gift {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text y='28' font-size='28'>🎁</text></svg>") 16 16, pointer;
+}
