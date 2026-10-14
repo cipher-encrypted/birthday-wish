@@ -89,8 +89,10 @@ function GiftLid({ lidOpen }) {
         duration: 0.8,
         ease: 'power2.out',
       })
-      gsap.to(lidRef.current, {
-        'material.opacity': 0,
+      gsap.to(lidRef.current.scale, {
+        x: 0,
+        y: 0,
+        z: 0,
         delay: 0.4,
         duration: 0.5,
       })
@@ -340,7 +342,6 @@ function BurstParticles({ active }) {
 function GiftScene({ onUnwrap, lidOpen }) {
   return (
     <>
-      <color attach="background" args={['transparent']} />
       <ambientLight intensity={1.5} color="#ffe8ef" />
       <directionalLight position={[4, 8, 4]} intensity={1} color="#ffd6e0" castShadow />
       <pointLight position={[-5, 3, 3]} intensity={0.6} color="#e1bee7" />
