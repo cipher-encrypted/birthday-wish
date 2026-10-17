@@ -11,6 +11,9 @@
   <title>Happy Birthday Vaishu (Sona) 🌸🎂</title>
   <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Chewy&family=Comic+Neue:wght@700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=DynaPuff:wght@600;700&family=Fredoka:wght@600;700;800;900&family=Great+Vibes&family=Playfair+Display:wght@400;600;700;900&family=Poppins:wght@400;500;600;700&family=Sniglet:wght@800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <!-- Three.js 3D Engine & OrbitControls for Repo 4: 3D Birthday Cake -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 </head>
 <body>
 
@@ -441,8 +444,40 @@
         <!-- Close Button -->
         <button class="cake-card-close" onclick="closeCakeModal()" title="Close">✕</button>
 
+        <!-- View Mode Switcher (Repo 4 3D Cake vs Classic 2D Illustration) -->
+        <div class="cake-view-toggle-bar">
+          <button id="view-3d-btn" class="cake-tab-btn active" onclick="switchCakeView('3d')">
+            <span>🎂 3D Interactive Cake</span>
+          </button>
+          <button id="view-cartoon-btn" class="cake-tab-btn" onclick="switchCakeView('cartoon')">
+            <span>🎨 Classic Illustration</span>
+          </button>
+        </div>
+
+        <!-- ★ Repo 4 (VIDAKHOSHPEY22): 3D Birthday Cake Interactive Scene ★ -->
+        <div id="three-cake-stage" class="three-cake-stage">
+          <div class="three-cake-header">
+            <h2 id="three-cake-heading" class="three-cake-heading">MAKE A WISH</h2>
+            <p class="three-cake-subheading">Close your eyes, make a wish, and blow into your mic 🎤 or tap the candles!</p>
+          </div>
+
+          <div id="three-canvas-wrap" class="three-canvas-wrap" onclick="handle3DCakeCanvasClick(event)">
+            <!-- WebGL 3D Canvas dynamically attached here -->
+          </div>
+
+          <!-- Hanging Wish Badge -->
+          <button class="three-click-wish-badge" onclick="blowOut3DCandles(event)" title="Click to Make Wish">
+            <span class="tcw-text">CLICK<br>ME 💖</span>
+          </button>
+
+          <!-- 3D Controls Hint -->
+          <div class="three-controls-overlay">
+            <span>✨ Drag or swipe to rotate 3D cake 360° • Scroll / pinch to zoom</span>
+          </div>
+        </div>
+
         <!-- Interactive Stage: 1:1 Match to User's Reference Screenshot -->
-        <div class="cake-interactive-stage" id="cake-stage" onclick="makeCakeWish(event)">
+        <div class="cake-interactive-stage" id="cake-stage" style="display:none" onclick="makeCakeWish(event)">
           
           <div class="cake-svg-wrap" id="cake-svg-wrap">
             <svg class="cake-svg" viewBox="0 0 920 580" preserveAspectRatio="xMidYMid meet">
@@ -711,7 +746,163 @@
 
         <!-- Footer Hint -->
         <div class="cake-footer-hint" id="cake-footer-hint">
-          <span>🕯️ Tap any candle to blow it out, or tap the cake / "CLICK ME" tag to make a wish! 🎂</span>
+          <span>🕯️ Tap candles / cake to blow them out — or <strong>enable your mic 🎤</strong> and blow for real!</span>
+        </div>
+
+        <!-- Mic Blow Detection Control Bar (Repo 4 Feature: VIDAKHOSHPEY22/3D-Birthday-Cake) -->
+        <div class="mic-control-bar" id="mic-control-bar">
+          <button class="mic-enable-btn" id="mic-enable-btn" onclick="toggleMicBlow()">
+            <span class="mic-icon-wrap">🎤</span>
+            <span id="mic-btn-label">Enable Mic Blow</span>
+          </button>
+          <!-- Live Volume Meter -->
+          <div class="mic-meter-wrap" id="mic-meter-wrap" style="display:none">
+            <div class="mic-meter-label">Breath Volume:</div>
+            <div class="mic-meter-track">
+              <div class="mic-meter-bar" id="mic-meter-bar"></div>
+              <div class="mic-meter-threshold"></div>
+            </div>
+            <span class="mic-meter-hint">Blow 💨 to blow out candles!</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ★ Repo 1 (Munna-Scriptz): Anime Character Slide-Up Birthday Popup ★ -->
+      <div id="anime-birthday-popup" class="anime-slide-popup hidden" onclick="closeAnimeBirthdayPopup()">
+        <div class="anime-popup-inner" onclick="event.stopPropagation()">
+          <!-- Floating stars & confetti background -->
+          <div class="anime-bg-particles" aria-hidden="true">
+            <span class="anp s1">✨</span><span class="anp s2">🌟</span><span class="anp s3">💫</span>
+            <span class="anp s4">⭐</span><span class="anp s5">✨</span><span class="anp s6">🌟</span>
+            <span class="anp s7">💖</span><span class="anp s8">🌸</span><span class="anp s9">🎉</span>
+          </div>
+
+          <!-- Close button -->
+          <button class="anime-popup-close" onclick="closeAnimeBirthdayPopup()">✕</button>
+
+          <!-- Anime Girl SVG character holding banner (pure CSS/SVG) -->
+          <div class="anime-character-wrap" aria-hidden="true">
+            <svg class="anime-girl-svg" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+              <!-- Body -->
+              <rect x="75" y="140" width="50" height="70" rx="12" fill="#ff8fab" />
+              <!-- Dress frills -->
+              <path d="M 65,155 Q 50,175 60,185 Q 75,170 80,185 Q 90,170 100,185 Q 110,170 120,185 Q 130,175 135,185 Q 140,170 135,155 Z" fill="#ffb3c6" />
+              <!-- Legs -->
+              <rect x="83" y="208" width="14" height="40" rx="6" fill="#ffd6a5" />
+              <rect x="103" y="208" width="14" height="40" rx="6" fill="#ffd6a5" />
+              <!-- Shoes -->
+              <ellipse cx="90" cy="248" rx="12" ry="6" fill="#c9184a" />
+              <ellipse cx="110" cy="248" rx="12" ry="6" fill="#c9184a" />
+              <!-- Left arm holding banner -->
+              <path d="M 75,148 Q 40,130 20,120" stroke="#ffd6a5" stroke-width="12" stroke-linecap="round" fill="none" />
+              <!-- Right arm -->
+              <path d="M 125,148 Q 160,130 180,120" stroke="#ffd6a5" stroke-width="12" stroke-linecap="round" fill="none" />
+              <!-- Left hand -->
+              <circle cx="20" cy="120" r="10" fill="#ffd6a5" />
+              <!-- Right hand -->
+              <circle cx="180" cy="120" r="10" fill="#ffd6a5" />
+              <!-- Neck -->
+              <rect x="90" y="110" width="20" height="18" rx="6" fill="#ffd6a5" />
+              <!-- Head -->
+              <ellipse cx="100" cy="92" rx="36" ry="38" fill="#ffd6a5" />
+              <!-- Hair (long dark) -->
+              <path d="M 65,72 Q 50,110 55,150 L 70,145 Q 66,115 78,88 Z" fill="#2d1b00" />
+              <path d="M 135,72 Q 150,110 145,150 L 130,145 Q 134,115 122,88 Z" fill="#2d1b00" />
+              <path d="M 65,72 Q 80,50 100,48 Q 120,50 135,72 Q 120,58 100,56 Q 80,58 65,72 Z" fill="#2d1b00" />
+              <!-- Hair bangs -->
+              <path d="M 70,78 Q 78,60 100,58 Q 122,60 130,78" fill="#2d1b00" />
+              <!-- Sparkly hairpin -->
+              <circle cx="68" cy="70" r="5" fill="#ffd700" />
+              <text x="63" y="74" font-size="8" fill="#ff6b9d">✦</text>
+              <!-- Big anime eyes -->
+              <ellipse cx="84" cy="96" rx="11" ry="13" fill="#ffffff" />
+              <ellipse cx="116" cy="96" rx="11" ry="13" fill="#ffffff" />
+              <ellipse cx="84" cy="98" rx="7.5" ry="9" fill="#6b3fa0" />
+              <ellipse cx="116" cy="98" rx="7.5" ry="9" fill="#6b3fa0" />
+              <ellipse cx="84" cy="99" rx="4.5" ry="5.5" fill="#1a0033" />
+              <ellipse cx="116" cy="99" rx="4.5" ry="5.5" fill="#1a0033" />
+              <circle cx="87" cy="95" r="3" fill="#ffffff" />
+              <circle cx="119" cy="95" r="3" fill="#ffffff" />
+              <!-- Blush cheeks -->
+              <ellipse cx="70" cy="108" rx="9" ry="5" fill="#ffb3c6" opacity="0.8" />
+              <ellipse cx="130" cy="108" rx="9" ry="5" fill="#ffb3c6" opacity="0.8" />
+              <!-- Cute small nose -->
+              <path d="M 97,108 Q 100,111 103,108" fill="none" stroke="#d4845a" stroke-width="1.5" stroke-linecap="round" />
+              <!-- Smile -->
+              <path d="M 88,116 Q 100,125 112,116" fill="none" stroke="#c9184a" stroke-width="2.5" stroke-linecap="round" />
+              <!-- Small kawaii ears -->
+              <ellipse cx="64" cy="90" rx="8" ry="10" fill="#ffd6a5" />
+              <ellipse cx="136" cy="90" rx="8" ry="10" fill="#ffd6a5" />
+            </svg>
+
+            <!-- Banner held by character -->
+            <div class="anime-banner-wrap" aria-label="Happy Birthday Banner">
+              <svg class="anime-banner-svg" viewBox="0 0 360 90" xmlns="http://www.w3.org/2000/svg">
+                <!-- Banner rope lines -->
+                <line x1="0" y1="10" x2="360" y2="10" stroke="#8b5e3c" stroke-width="2" stroke-dasharray="6,4" />
+                <!-- Banner flags -->
+                <polygon points="10,10 40,10 40,55 25,65 10,55" fill="#ff4d6d" />
+                <polygon points="45,10 75,10 75,55 60,65 45,55" fill="#ffd700" />
+                <polygon points="80,10 110,10 110,55 95,65 80,55" fill="#a855f7" />
+                <polygon points="115,10 145,10 145,55 130,65 115,55" fill="#ff4d6d" />
+                <polygon points="150,10 180,10 180,55 165,65 150,55" fill="#22c55e" />
+                <polygon points="185,10 215,10 215,55 200,65 185,55" fill="#ffd700" />
+                <polygon points="220,10 250,10 250,55 235,65 220,55" fill="#ff4d6d" />
+                <polygon points="255,10 285,10 285,55 270,65 255,55" fill="#a855f7" />
+                <polygon points="290,10 320,10 320,55 305,65 290,55" fill="#22c55e" />
+                <polygon points="325,10 355,10 355,55 340,65 325,55" fill="#ffd700" />
+                <!-- Letters on banner flags -->
+                <text x="25" y="40" text-anchor="middle" fill="#ffffff" font-family="'Chewy', cursive" font-size="22" font-weight="bold">H</text>
+                <text x="60" y="40" text-anchor="middle" fill="#333" font-family="'Chewy', cursive" font-size="22" font-weight="bold">A</text>
+                <text x="95" y="40" text-anchor="middle" fill="#ffffff" font-family="'Chewy', cursive" font-size="22" font-weight="bold">P</text>
+                <text x="130" y="40" text-anchor="middle" fill="#ffffff" font-family="'Chewy', cursive" font-size="22" font-weight="bold">P</text>
+                <text x="165" y="40" text-anchor="middle" fill="#ffffff" font-family="'Chewy', cursive" font-size="22" font-weight="bold">Y</text>
+                <text x="200" y="40" text-anchor="middle" fill="#333" font-family="'Chewy', cursive" font-size="22" font-weight="bold">🎂</text>
+                <text x="235" y="40" text-anchor="middle" fill="#ffffff" font-family="'Chewy', cursive" font-size="22" font-weight="bold">B</text>
+                <text x="270" y="40" text-anchor="middle" fill="#ffffff" font-family="'Chewy', cursive" font-size="22" font-weight="bold">D</text>
+                <text x="305" y="40" text-anchor="middle" fill="#333" font-family="'Chewy', cursive" font-size="22" font-weight="bold">!</text>
+                <text x="340" y="40" text-anchor="middle" fill="#ffffff" font-family="'Chewy', cursive" font-size="22" font-weight="bold">🎉</text>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Birthday name message -->
+          <div class="anime-name-card">
+            <p class="anime-greeting">🌸 Happy Birthday 🌸</p>
+            <h2 class="anime-name-big">Vaishu</h2>
+            <p class="anime-subtext">Wishing you all the magic and joy in the world! 💖✨🎂</p>
+            <button class="anime-continue-btn" onclick="closeAnimeBirthdayPopup(); setTimeout(openCatVideoModal, 400);">
+              <span>See the Cat Squad's Gift 🐱🎁</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ★ Repo 2 (smurf11k/bday-cake): Celebratory Corner Stickers & Animated GIF ★ -->
+      <div id="celebration-stickers" class="celebration-stickers hidden">
+        <div class="sticker-corner sticker-bl">
+          <span class="sticker-emoji balloon-sway s-b1">🎈</span>
+          <span class="sticker-emoji balloon-sway s-b2">🎀</span>
+          <span class="sticker-emoji balloon-sway s-b3">🎊</span>
+        </div>
+        <div class="sticker-corner sticker-br">
+          <span class="sticker-emoji balloon-sway s-b4">🎈</span>
+          <span class="sticker-emoji balloon-sway s-b5">✨</span>
+          <span class="sticker-emoji balloon-sway s-b6">🎉</span>
+        </div>
+        <div class="sticker-corner sticker-tl">
+          <span class="sticker-emoji balloon-sway s-b7">⭐</span>
+          <span class="sticker-emoji balloon-sway s-b8">🌟</span>
+        </div>
+        <div class="sticker-corner sticker-tr">
+          <span class="sticker-emoji balloon-sway s-b9">💖</span>
+          <span class="sticker-emoji balloon-sway s-b10">🌸</span>
+        </div>
+
+        <!-- Repo 2: Bottom Celebratory Animated Cat GIF Card -->
+        <div class="celebration-gif-card" id="celebration-gif-card">
+          <img src="assets/cat-celebrate.gif" alt="Celebration Cat" class="celebration-cat-gif" />
+          <span class="celebration-gif-caption">Party Vibes for Sona! 🐱🎂🎉</span>
         </div>
       </div>
 
