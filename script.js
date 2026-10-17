@@ -258,23 +258,43 @@ function handleChoice(choice) {
   }
   const promptEl = document.getElementById('surprise-prompt');
   if (promptEl) {
-    promptEl.style.display = 'none';
+    promptEl.innerHTML = "Say YES to open your mystery gifts! ✨💖";
+    promptEl.style.display = 'block';
   }
   const btnGroup = document.querySelector('.surprise-btn-group');
   if (btnGroup) {
     btnGroup.innerHTML = `
-      <button class="pill-btn yes-btn" onclick="handleExcitedChoice()">
+      <button id="btn-excited-yes" class="pill-btn yes-btn" onclick="handleExcitedChoice()">
         <span class="btn-shine-tr"></span>
         <span class="btn-label">YES</span>
         <span class="btn-shine-bl"></span>
       </button>
-      <button class="pill-btn yes-btn" onclick="handleExcitedChoice()">
+      <button id="btn-excited-no" class="pill-btn no-btn" onclick="handleExcitedNo()">
         <span class="btn-shine-tr"></span>
-        <span class="btn-label">YES</span>
+        <span class="btn-label">NO</span>
         <span class="btn-shine-bl"></span>
       </button>
     `;
     triggerElementAnim(btnGroup, 'btn-entrance-bounce');
+  }
+}
+
+function handleExcitedNo() {
+  const danceGif = document.getElementById('dance-gif');
+  if (danceGif) {
+    danceGif.src = PLEADING_GIF_URL;
+  }
+  const promptEl = document.getElementById('surprise-prompt');
+  if (promptEl) {
+    promptEl.style.display = 'block';
+    promptEl.innerHTML = "Wait, what?! How can you not be excited, Sona? 🥺 Please say YES! 💖";
+    triggerElementAnim(promptEl, 'prompt-entrance-pop');
+  }
+  const noBtn = document.getElementById('btn-excited-no');
+  if (noBtn) {
+    noBtn.style.animation = 'none';
+    void noBtn.offsetWidth;
+    noBtn.style.animation = 'cardShake 0.4s ease';
   }
 }
 
@@ -1039,7 +1059,11 @@ function makeCakeWish(e) {
   if (threeHeading) threeHeading.textContent = "HAPPY BIRTHDAY VAISHU! 🎉";
 
   const archText = document.getElementById('cake-arch-text');
-  if (archText) archText.textContent = "HAPPY BIRTHDAY VAISHU! 🎉";
+  if (archText) {
+    archText.textContent = "HAPPY BIRTHDAY VAISHU! 🌸";
+    archText.setAttribute('font-size', '44');
+    archText.setAttribute('letter-spacing', '2');
+  }
 
   // Hide hint and show celebration ribbon on cake stage
   const hint = document.getElementById('cake-footer-hint');
@@ -1634,101 +1658,238 @@ document.addEventListener('mousemove', e => {
   requestAnimationFrame(update);
 })();
 
-/* ─── DREAMY MUSIC-BOX SYNTHESIZER & TOGGLE ─── */
+/* ─── DREAMY AMBIENT PIANO & MUSIC-BOX SYNTHESIZER ─── */
 let musicCtx = null;
 let isMusicPlaying = false;
 let musicTimer = null;
-let melodyStep = 0;
+let patternStep = 0;
+let musicReverbBus = null;
 
-const M_NOTES = [
-  523.25, // C5
-  587.33, // D5
-  659.25, // E5
-  698.46, // F5
-  783.99, // G5
-  880.00, // A5
-  987.77, // B5
-  1046.50 // C6
-];
-
-const MUSIC_BOX_MELODY = [
-  { note: 2, dur: 380 }, // E5
-  { note: 4, dur: 380 }, // G5
-  { note: 5, dur: 500 }, // A5
-  { note: 7, dur: 600 }, // C6
-  { note: 6, dur: 400 }, // B5
-  { note: 4, dur: 400 }, // G5
-  { note: 2, dur: 500 }, // E5
-  { note: 1, dur: 400 }, // D5
-
-  { note: 2, dur: 380 }, // E5
-  { note: 4, dur: 380 }, // G5
-  { note: 5, dur: 500 }, // A5
-  { note: 7, dur: 600 }, // C6
-  { note: 6, dur: 400 }, // B5
-  { note: 7, dur: 700 }, // C6
-  { note: 0, dur: 450 }, // pause
-
-  { note: 4, dur: 380 }, // G5
-  { note: 7, dur: 400 }, // C6
-  { note: 6, dur: 380 }, // B5
-  { note: 5, dur: 500 }, // A5
-  { note: 4, dur: 400 }, // G5
-  { note: 2, dur: 450 }, // E5
-  { note: 1, dur: 400 }, // D5
-  { note: 2, dur: 650 }, // E5
-  { note: 0, dur: 500 }, // pause
-];
-
-function playMusicBoxPluck(freq) {
+// High-quality warm felt piano & music-box note player
+function playWarmPianoNote(freq, vel = 0.5, dur = 2.4, timeOffset = 0) {
   if (!musicCtx || !isMusicPlaying) return;
   try {
-    const t = musicCtx.currentTime;
+    const t = musicCtx.currentTime + timeOffset;
 
+    // 1. Fundamental warm body (triangle wave)
     const osc1 = musicCtx.createOscillator();
-    const gain1 = musicCtx.createGain();
-    osc1.type = 'sine';
+    osc1.type = 'triangle';
     osc1.frequency.setValueAtTime(freq, t);
 
+    // 2. Soft octave harmonic (pure sine)
     const osc2 = musicCtx.createOscillator();
-    const gain2 = musicCtx.createGain();
     osc2.type = 'sine';
-    osc2.frequency.setValueAtTime(freq * 2.756, t);
+    osc2.frequency.setValueAtTime(freq * 2, t);
 
-    const masterGain = musicCtx.createGain();
-    masterGain.gain.setValueAtTime(0.0001, t);
-    masterGain.gain.exponentialRampToValueAtTime(0.16, t + 0.015);
-    masterGain.gain.exponentialRampToValueAtTime(0.0001, t + 1.35);
+    // 3. Subtle sub-warmth for lower resonance
+    const osc3 = musicCtx.createOscillator();
+    osc3.type = 'sine';
+    osc3.frequency.setValueAtTime(freq * 0.5, t);
 
-    gain1.gain.setValueAtTime(0.7, t);
-    gain2.gain.setValueAtTime(0.12, t);
+    // 4. Low-pass filter to model soft felt piano hammers (no harsh digital edges)
+    const filter = musicCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(Math.min(1600, freq * 3.2), t);
+    filter.frequency.exponentialRampToValueAtTime(Math.max(350, freq * 1.1), t + dur);
+    filter.Q.value = 1.0;
 
-    osc1.connect(gain1);
-    osc2.connect(gain2);
-    gain1.connect(masterGain);
-    gain2.connect(masterGain);
-    masterGain.connect(musicCtx.destination);
+    // 5. Envelope: silky soft attack, warm sustain, gentle exponential fade
+    const noteGain = musicCtx.createGain();
+    const peakGain = Math.min(0.22, Math.max(0.001, vel * 0.14));
+    noteGain.gain.setValueAtTime(0.00001, t);
+    noteGain.gain.linearRampToValueAtTime(peakGain, t + 0.035); // 35ms soft felt attack
+    noteGain.gain.exponentialRampToValueAtTime(peakGain * 0.55, t + 0.35); // natural felt decay
+    noteGain.gain.exponentialRampToValueAtTime(0.00001, t + dur);
+
+    const g1 = musicCtx.createGain(); g1.gain.value = 0.65;
+    const g2 = musicCtx.createGain(); g2.gain.value = 0.25;
+    const g3 = musicCtx.createGain(); g3.gain.value = 0.15;
+
+    osc1.connect(g1);
+    osc2.connect(g2);
+    osc3.connect(g3);
+
+    g1.connect(filter);
+    g2.connect(filter);
+    g3.connect(filter);
+
+    filter.connect(noteGain);
+    noteGain.connect(musicCtx.destination);
+
+    // Connect to lush stereo reverb space
+    if (musicReverbBus) {
+      noteGain.connect(musicReverbBus);
+    }
 
     osc1.start(t);
     osc2.start(t);
-    osc1.stop(t + 1.4);
-    osc2.stop(t + 0.9);
+    osc3.start(t);
+
+    osc1.stop(t + dur + 0.1);
+    osc2.stop(t + dur + 0.1);
+    osc3.stop(t + dur + 0.1);
   } catch (err) {
     // Graceful fallback
   }
 }
 
+// Lush stereo space delay and ambient reverb simulator
+function initReverbBus() {
+  if (!musicCtx) return null;
+  try {
+    const input = musicCtx.createGain();
+    const lpf = musicCtx.createBiquadFilter();
+    lpf.type = 'lowpass';
+    lpf.frequency.value = 900;
+
+    const delayL = musicCtx.createDelay();
+    delayL.delayTime.value = 0.28;
+    const delayR = musicCtx.createDelay();
+    delayR.delayTime.value = 0.38;
+
+    const fbL = musicCtx.createGain();
+    fbL.gain.value = 0.32;
+    const fbR = musicCtx.createGain();
+    fbR.gain.value = 0.32;
+
+    const merger = musicCtx.createChannelMerger(2);
+    const wetOut = musicCtx.createGain();
+    wetOut.gain.value = 0.38;
+
+    input.connect(lpf);
+    lpf.connect(delayL);
+    lpf.connect(delayR);
+
+    delayL.connect(fbL);
+    fbL.connect(delayR);
+    delayR.connect(fbR);
+    fbR.connect(delayL);
+
+    delayL.connect(merger, 0, 0);
+    delayR.connect(merger, 0, 1);
+    merger.connect(wetOut);
+    wetOut.connect(musicCtx.destination);
+
+    return input;
+  } catch (e) {
+    return null;
+  }
+}
+
+// Gentle, peaceful, heartfelt chord progression & music-box arpeggio (Cmaj7 - Am9 - Fmaj7 - Gsus4)
+const SOOTHING_CHORDS = [
+  // Bar 1: Cmaj7
+  {
+    chord: [130.81, 196.00, 246.94, 329.63], // C3, G3, B3, E4
+    melody: [
+      { note: 392.00, delay: 0, vel: 0.7, dur: 2.2 },     // G4
+      { note: 493.88, delay: 420, vel: 0.55, dur: 2.0 },   // B4
+      { note: 523.25, delay: 840, vel: 0.65, dur: 2.5 },   // C5
+      { note: 392.00, delay: 1350, vel: 0.5, dur: 1.8 }    // G4
+    ],
+    duration: 1850
+  },
+  // Bar 2: Am9
+  {
+    chord: [110.00, 164.81, 196.00, 261.63], // A2, E3, G3, C4
+    melody: [
+      { note: 329.63, delay: 0, vel: 0.65, dur: 2.2 },    // E4
+      { note: 392.00, delay: 420, vel: 0.55, dur: 2.0 },   // G4
+      { note: 493.88, delay: 840, vel: 0.65, dur: 2.5 },   // B4
+      { note: 440.00, delay: 1350, vel: 0.55, dur: 2.0 }   // A4
+    ],
+    duration: 1850
+  },
+  // Bar 3: Fmaj7
+  {
+    chord: [87.31, 130.81, 174.61, 220.00], // F2, C3, F3, A3
+    melody: [
+      { note: 261.63, delay: 0, vel: 0.65, dur: 2.2 },    // C4
+      { note: 329.63, delay: 420, vel: 0.55, dur: 2.0 },   // E4
+      { note: 392.00, delay: 840, vel: 0.65, dur: 2.5 },   // G4
+      { note: 349.23, delay: 1350, vel: 0.5, dur: 1.8 }    // F4
+    ],
+    duration: 1850
+  },
+  // Bar 4: Gadd9 / Gsus4
+  {
+    chord: [98.00, 146.83, 196.00, 246.94], // G2, D3, G3, B3
+    melody: [
+      { note: 293.66, delay: 0, vel: 0.65, dur: 2.2 },    // D4
+      { note: 392.00, delay: 420, vel: 0.55, dur: 2.0 },   // G4
+      { note: 440.00, delay: 840, vel: 0.65, dur: 2.5 },   // A4
+      { note: 493.88, delay: 1350, vel: 0.55, dur: 2.2 }   // B4
+    ],
+    duration: 1850
+  },
+  // Bar 5: Em7
+  {
+    chord: [82.41, 123.47, 164.81, 196.00], // E2, B2, E3, G3
+    melody: [
+      { note: 329.63, delay: 0, vel: 0.6, dur: 2.2 },     // E4
+      { note: 392.00, delay: 420, vel: 0.55, dur: 2.0 },   // G4
+      { note: 523.25, delay: 840, vel: 0.65, dur: 2.5 },   // C5
+      { note: 493.88, delay: 1350, vel: 0.55, dur: 2.0 }   // B4
+    ],
+    duration: 1850
+  },
+  // Bar 6: Am7
+  {
+    chord: [110.00, 164.81, 220.00, 261.63], // A2, E3, A3, C4
+    melody: [
+      { note: 440.00, delay: 0, vel: 0.65, dur: 2.2 },    // A4
+      { note: 392.00, delay: 420, vel: 0.55, dur: 2.0 },   // G4
+      { note: 329.63, delay: 840, vel: 0.6, dur: 2.2 },    // E4
+      { note: 293.66, delay: 1350, vel: 0.5, dur: 1.8 }    // D4
+    ],
+    duration: 1850
+  },
+  // Bar 7: Dm7 / F
+  {
+    chord: [73.42, 146.83, 174.61, 220.00], // D2, D3, F3, A3
+    melody: [
+      { note: 261.63, delay: 0, vel: 0.65, dur: 2.2 },    // C4
+      { note: 293.66, delay: 420, vel: 0.55, dur: 2.0 },   // D4
+      { note: 349.23, delay: 840, vel: 0.65, dur: 2.5 },   // F4
+      { note: 392.00, delay: 1350, vel: 0.55, dur: 2.0 }   // G4
+    ],
+    duration: 1850
+  },
+  // Bar 8: G7sus4 -> C resolution cadence
+  {
+    chord: [98.00, 146.83, 174.61, 246.94], // G2, D3, F3, B3
+    melody: [
+      { note: 349.23, delay: 0, vel: 0.65, dur: 2.2 },    // F4
+      { note: 329.63, delay: 420, vel: 0.6, dur: 2.0 },    // E4
+      { note: 293.66, delay: 840, vel: 0.55, dur: 2.2 },   // D4
+      { note: 261.63, delay: 1350, vel: 0.7, dur: 2.8 }    // C4 (resolves warmly)
+    ],
+    duration: 1950
+  }
+];
+
 function playNextMelodyStep() {
   if (!isMusicPlaying) return;
-  const item = MUSIC_BOX_MELODY[melodyStep];
-  melodyStep = (melodyStep + 1) % MUSIC_BOX_MELODY.length;
+  const bar = SOOTHING_CHORDS[patternStep];
+  patternStep = (patternStep + 1) % SOOTHING_CHORDS.length;
 
-  if (item && item.note > 0) {
-    const freq = M_NOTES[item.note];
-    playMusicBoxPluck(freq);
+  if (bar) {
+    // Play warm root chord harmonies
+    if (bar.chord) {
+      bar.chord.forEach((freq, i) => {
+        const vel = i === 0 ? 0.65 : 0.42;
+        playWarmPianoNote(freq, vel, 2.8, i * 0.025);
+      });
+    }
+    // Play gentle arpeggiated piano melody
+    if (bar.melody) {
+      bar.melody.forEach(item => {
+        playWarmPianoNote(item.note, item.vel, item.dur, item.delay / 1000);
+      });
+    }
   }
 
-  musicTimer = setTimeout(playNextMelodyStep, item ? item.dur : 400);
+  musicTimer = setTimeout(playNextMelodyStep, bar ? bar.duration : 1850);
 }
 
 function startBackgroundMusic() {
@@ -1742,8 +1903,11 @@ function startBackgroundMusic() {
     if (musicCtx.state === 'suspended') {
       musicCtx.resume();
     }
+    if (!musicReverbBus) {
+      musicReverbBus = initReverbBus();
+    }
     isMusicPlaying = true;
-    melodyStep = 0;
+    patternStep = 0;
     updateMusicButtonState(true);
     playNextMelodyStep();
   } catch (e) {
