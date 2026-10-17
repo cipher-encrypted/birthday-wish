@@ -1074,7 +1074,16 @@ function makeCakeWish(e) {
 
   // Repo 2: Show celebratory corner stickers & cat GIF
   const stickers = document.getElementById('celebration-stickers');
-  if (stickers) stickers.classList.remove('hidden');
+  if (stickers) {
+    stickers.classList.remove('hidden');
+    const catImg = document.getElementById('celebration-cat-img');
+    if (catImg) {
+      // Ensure GIF starts and loops cleanly from frame 1
+      const currentSrc = catImg.getAttribute('src') || 'assets/cat-celebrate.gif';
+      const cleanSrc = currentSrc.split('?')[0];
+      catImg.src = cleanSrc + '?t=' + Date.now();
+    }
+  }
 
   // Repo 1: Reveal Anime Character Slide-Up Birthday Popup
   setTimeout(() => {
