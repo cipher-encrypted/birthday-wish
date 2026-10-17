@@ -1083,11 +1083,20 @@ function makeCakeWish(e) {
 }
 
 /* ─── CAT BIRTHDAY VIDEO POPUP MODAL LOGIC ─── */
+let wasMusicPlayingBeforeCatVideo = false;
+
 function openCatVideoModal() {
   const modal = document.getElementById('cat-video-modal');
   if (!modal) return;
   modal.classList.remove('hidden');
   launchConfetti();
+
+  // Seamlessly pause background music if it was playing so cat video audio is crystal clear
+  if (isMusicPlaying) {
+    wasMusicPlayingBeforeCatVideo = true;
+    stopBackgroundMusic();
+  }
+
   playCatBirthdayVideo();
 }
 
@@ -1183,6 +1192,12 @@ function closeCatVideoModal() {
   }
   const playIcon = document.getElementById('cat-play-overlay-icon');
   if (playIcon) playIcon.classList.add('hidden');
+
+  // Resume background music if it was playing before
+  if (wasMusicPlayingBeforeCatVideo) {
+    wasMusicPlayingBeforeCatVideo = false;
+    startBackgroundMusic();
+  }
 }
 
 function handleCatVideoOverlayClick(e) {

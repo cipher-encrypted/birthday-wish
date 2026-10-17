@@ -919,7 +919,7 @@
         </div>
       </div>
 
-      <!-- Special Delivery Cat Birthday Video Popup Modal (Box 2 Finale) -->
+      <!-- Special Delivery Cat Birthday Video Popup Modal (Box 2 Finale - Cinematic Widescreen) -->
       <div id="cat-video-modal" class="cat-video-overlay hidden" onclick="handleCatVideoOverlayClick(event)">
         <div class="cat-video-popup-card" onclick="event.stopPropagation()">
           <!-- Close Button -->
@@ -930,17 +930,17 @@
             <span>🐱🐾 PURR-FECT BIRTHDAY SURPRISE 🐾🐱</span>
           </div>
 
-          <!-- Cute Caption -->
+          <!-- Cute Caption with Soft Sakura Glow -->
           <h3 class="cat-video-caption">Special delivery from the cat squad for Sona! 🐱🎂✨</h3>
 
-          <!-- Video Frame with Sound & Play Controls -->
+          <!-- Cinematic Widescreen Video Frame (Edge-to-Edge, Zero Black Bars) -->
           <div class="cat-video-frame" onclick="toggleCatVideoPlay(event)">
             <video id="cat-birthday-video" class="cat-birthday-video" playsinline preload="auto" loop>
               <source src="assets/cat-birthday.mp4" type="video/mp4">
               Your browser does not support HTML5 video.
             </video>
 
-            <!-- Sound / Unmute Overlay Pill Button -->
+            <!-- Floating Glassmorphic Sound / Unmute Overlay Pill -->
             <button id="cat-sound-toggle-btn" class="cat-sound-toggle-btn" onclick="toggleCatVideoSound(event)" title="Toggle Sound">
               <span id="cat-sound-icon">🔊</span>
               <span id="cat-sound-text">Sound On</span>
@@ -952,14 +952,27 @@
             </div>
           </div>
 
-          <!-- Celebration Wish Card Below Video -->
-          <div class="cat-video-wish-card">
-            <p class="wish-main-text">🎉 "May your year be as sweet, bright, and magical as you are, Sona! May all your dreams come true!" 💖🍰🌸</p>
-            <div class="cat-video-actions-row">
-              <button class="cake-btn-again" onclick="resetCake()">🕯️ Relight Candles</button>
-              <button class="cat-btn-next" onclick="goToLetterFromCake()">💌 Next Gift: Letter 🌸</button>
-              <button class="cake-btn-back" onclick="closeCakeModal()">💖 Back to Gifts</button>
-            </div>
+          <!-- Airy Celebration Wish Message with Sakura Glow -->
+          <div class="cat-video-quote-wrap">
+            <p class="cat-video-quote-text">
+              ✨ "May your year be as sweet, bright, and magical as you are, Sona! May all your dreams come true!" 💖🍰🌸
+            </p>
+          </div>
+
+          <!-- Ultra-High Contrast Action Buttons -->
+          <div class="cat-video-actions-row">
+            <button class="cat-act-btn btn-relight" onclick="resetCake()" title="Relight the Birthday Candles">
+              <span class="act-btn-icon">🕯️</span>
+              <span class="act-btn-text">Relight Candles</span>
+            </button>
+            <button class="cat-act-btn btn-next-letter" onclick="goToLetterFromCake()" title="Proceed to Birthday Letter">
+              <span class="act-btn-icon">💌</span>
+              <span class="act-btn-text">Next Gift: Letter 🌸</span>
+            </button>
+            <button class="cat-act-btn btn-back-gifts" onclick="closeCakeModal()" title="Return to Gift Boxes">
+              <span class="act-btn-icon">💖</span>
+              <span class="act-btn-text">Back to Gifts</span>
+            </button>
           </div>
         </div>
       </div>

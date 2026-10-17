@@ -1377,6 +1377,7 @@ html, body {
 }
 
 /* ─── CAT BIRTHDAY VIDEO POPUP MODAL (BOX 2 FINALE) ─── */
+/* ─── CAT BIRTHDAY VIDEO POPUP MODAL (BOX 2 FINALE - CINEMATIC WIDESCREEN) ─── */
 .cat-video-overlay {
   position: fixed;
   inset: 0;
@@ -1384,10 +1385,11 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(12px, 2.5vh, 20px);
+  padding: clamp(14px, 3vh, 28px);
   box-sizing: border-box;
-  background: rgba(30, 8, 20, 0.78);
-  backdrop-filter: blur(8px);
+  background: rgba(25, 8, 20, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   animation: fadeInBackdrop 0.35s ease;
 }
 .cat-video-overlay.hidden {
@@ -1401,25 +1403,30 @@ html, body {
 
 .cat-video-popup-card {
   position: relative;
-  width: 96vw;
-  max-width: 490px;
-  max-height: 92vh;
+  width: 95vw;
+  max-width: 680px;
+  max-height: 94vh;
   overflow-y: auto;
-  background: #ffffff;
-  border: 3.5px solid #ff7597;
-  border-radius: 28px;
-  box-shadow: 0 25px 65px rgba(233, 30, 99, 0.35), 0 0 30px rgba(255, 182, 193, 0.45);
-  padding: clamp(16px, 2.5vh, 22px) clamp(14px, 3vw, 22px);
+  background: rgba(255, 252, 253, 0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 3px solid rgba(255, 143, 177, 0.85);
+  border-radius: 32px;
+  box-shadow: 
+    0 28px 75px rgba(233, 30, 99, 0.35),
+    0 0 45px rgba(255, 182, 193, 0.45),
+    inset 0 1px 2px rgba(255, 255, 255, 0.95);
+  padding: clamp(18px, 2.8vh, 28px) clamp(16px, 3.2vw, 32px);
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   animation: cardPopIn 0.45s cubic-bezier(0.34, 1.45, 0.64, 1);
   box-sizing: border-box;
 }
 
-/* Custom scrollbar inside card if screen is very short */
+/* Custom scrollbar inside card if screen is short */
 .cat-video-popup-card::-webkit-scrollbar {
   width: 6px;
 }
@@ -1430,107 +1437,122 @@ html, body {
 
 .cat-video-close {
   position: absolute;
-  top: 12px;
-  right: 14px;
-  width: 34px;
-  height: 34px;
+  top: 14px;
+  right: 18px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   border: 2px solid #ff758f;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.95);
   color: #c9184a;
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 3px 8px rgba(255, 105, 180, 0.2);
-  transition: transform 0.2s ease, background 0.2s ease;
-  z-index: 10;
+  box-shadow: 0 4px 12px rgba(255, 105, 180, 0.25);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 25;
 }
 .cat-video-close:hover {
-  transform: scale(1.15) rotate(90deg);
+  transform: scale(1.12) rotate(90deg);
   background: #fff0f5;
+  box-shadow: 0 6px 18px rgba(255, 105, 180, 0.4);
 }
 
 .cat-video-pill-badge {
-  background: linear-gradient(135deg, #ff4081, #d81b60);
+  background: linear-gradient(135deg, #ff4d6d, #c9184a);
   color: #ffffff;
-  font-family: 'Chewy', 'Fredoka', cursive, sans-serif;
-  font-size: 0.85rem;
-  letter-spacing: 1px;
-  padding: 4px 16px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 6px 20px;
   border-radius: 50px;
-  box-shadow: 0 3px 10px rgba(216, 27, 96, 0.3);
-  margin-top: -2px;
+  box-shadow: 0 4px 15px rgba(201, 24, 74, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .cat-video-caption {
-  font-family: 'Chewy', 'Lilita One', 'Fredoka', cursive, sans-serif;
-  font-size: clamp(1.12rem, 2.8vw, 1.38rem);
+  font-family: 'Chewy', 'Fredoka', 'Lilita One', cursive, sans-serif;
+  font-size: clamp(1.28rem, 2.8vw, 1.65rem);
+  font-weight: 800;
   color: #6b3a4c;
   margin: 0;
-  line-height: 1.35;
-  text-shadow: 0 1px 2px rgba(255, 105, 180, 0.2);
-  padding: 0 14px;
+  line-height: 1.3;
+  text-shadow: 0 2px 12px rgba(255, 105, 180, 0.25);
+  padding: 0 10px;
 }
 
+/* Cinematic Widescreen Video Frame: Completely Fills Container with Zero Black Bars */
 .cat-video-frame {
   position: relative;
   width: 100%;
-  border-radius: 20px;
+  max-width: 630px;
+  aspect-ratio: 16 / 9;
+  border-radius: 22px;
   overflow: hidden;
-  background: #0d0c13;
-  border: 3px solid #ff80ab;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), inset 0 0 12px rgba(255, 128, 171, 0.2);
+  background: #140812;
+  border: 2.5px solid rgba(255, 143, 177, 0.85);
+  box-shadow: 
+    0 16px 45px rgba(233, 30, 99, 0.28),
+    0 0 25px rgba(255, 182, 193, 0.35),
+    inset 0 0 15px rgba(255, 143, 177, 0.15);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 2px auto;
 }
 
 .cat-birthday-video {
   width: 100%;
-  max-height: 42vh;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 32%; /* perfectly frames the cute cats without black pillarboxes */
   display: block;
-  object-fit: contain;
-  border-radius: 17px;
-  background: #000000;
 }
 
-/* Sound / Unmute Overlay Pill */
+/* Floating Glassmorphic Sound On / Unmute Pill Button */
 .cat-sound-toggle-btn {
   position: absolute;
-  bottom: 12px;
-  right: 12px;
-  z-index: 6;
-  background: rgba(25, 15, 25, 0.88);
-  backdrop-filter: blur(8px);
+  bottom: 14px;
+  right: 14px;
+  z-index: 10;
+  background: rgba(18, 10, 24, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   color: #ffffff;
-  border: 2px solid #ff80ab;
+  border: 1.5px solid rgba(255, 182, 193, 0.7);
   border-radius: 50px;
-  padding: 6px 14px;
-  font-family: 'Fredoka', 'Poppins', sans-serif;
+  padding: 7px 18px;
+  font-family: 'Poppins', sans-serif;
   font-size: 0.88rem;
   font-weight: 600;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
-  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+  transition: all 0.25s cubic-bezier(0.34, 1.45, 0.64, 1);
+  user-select: none;
 }
 .cat-sound-toggle-btn:hover {
-  transform: scale(1.08);
+  transform: translateY(-2px) scale(1.06);
+  background: rgba(233, 30, 99, 0.9);
+  border-color: #ffffff;
+  box-shadow: 0 8px 24px rgba(233, 30, 99, 0.55);
 }
 .cat-sound-toggle-btn.muted-pulse {
-  background: linear-gradient(135deg, #e91e63, #ff4081);
-  border-color: #ffebee;
+  background: linear-gradient(135deg, #ff4081, #d81b60);
+  border-color: #ffffff;
   animation: soundPulseGlow 1.4s ease-in-out infinite alternate;
 }
 @keyframes soundPulseGlow {
-  0% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 64, 129, 0.6); }
-  100% { transform: scale(1.08); box-shadow: 0 0 20px rgba(255, 64, 129, 0.95); }
+  0% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 64, 129, 0.5); }
+  100% { transform: scale(1.05); box-shadow: 0 0 22px rgba(255, 64, 129, 0.85); }
 }
 
 /* Center Play Overlay Icon when Paused */
@@ -1539,17 +1561,18 @@ html, body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 58px;
-  height: 58px;
-  background: rgba(233, 30, 99, 0.85);
+  width: 62px;
+  height: 62px;
+  background: rgba(233, 30, 99, 0.88);
+  backdrop-filter: blur(8px);
   border: 2.5px solid #ffffff;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  font-size: 1.6rem;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  font-size: 1.8rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
   pointer-events: none;
   animation: pulseIcon 1.2s ease-in-out infinite alternate;
 }
@@ -1561,69 +1584,137 @@ html, body {
   100% { transform: translate(-50%, -50%) scale(1.08); }
 }
 
-/* Wish Box Below Video */
-.cat-video-wish-card {
+/* Airy Wish Quote Section with Sakura Glow (No Cramped Double Boxes) */
+.cat-video-quote-wrap {
   width: 100%;
-  background: #fff8fa;
-  border: 2px solid #ff7597;
-  border-radius: 20px;
-  padding: 10px 16px;
-  box-shadow: 0 4px 14px rgba(233, 30, 99, 0.12);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
+  max-width: 630px;
+  margin: 2px auto 0 auto;
+  padding: 10px 18px;
+  background: rgba(255, 240, 246, 0.7);
+  border: 1.5px solid rgba(255, 182, 193, 0.6);
+  border-radius: 18px;
+  box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.8), 0 4px 16px rgba(255, 105, 180, 0.08);
   box-sizing: border-box;
 }
-.cat-video-wish-card .wish-main-text {
+.cat-video-quote-text {
+  font-family: 'Poppins', 'Fredoka', sans-serif;
+  font-size: clamp(0.9rem, 1.4vw, 1.02rem);
+  font-weight: 600;
+  color: #592e38;
+  line-height: 1.45;
+  margin: 0;
   text-align: center;
-  width: 100%;
 }
+
+/* Action Buttons Row with High Contrast, Glowing Bold Text and Clear Icons */
 .cat-video-actions-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 12px;
   flex-wrap: wrap;
   width: 100%;
-}
-.cat-btn-next {
-  padding: 8px 18px;
-  border-radius: 50px;
-  font-family: 'Chewy', 'Fredoka', cursive;
-  font-size: 0.95rem;
-  font-weight: 700;
-  cursor: pointer;
-  background: linear-gradient(135deg, #8e24aa, #ba68c8);
-  color: #ffffff;
-  border: 2px solid #4a148c;
-  box-shadow: 0 4px 12px rgba(142, 36, 170, 0.3);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  white-space: nowrap;
-}
-.cat-btn-next:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(142, 36, 170, 0.45);
+  max-width: 650px;
+  margin-top: 4px;
 }
 
-@media (max-width: 480px) {
+.cat-act-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border-radius: 50px;
+  font-family: 'Fredoka', 'Poppins', sans-serif;
+  font-size: 0.96rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.22s cubic-bezier(0.34, 1.45, 0.64, 1);
+  white-space: nowrap;
+  user-select: none;
+  text-decoration: none;
+}
+
+/* Button 1: Relight Candles (Vibrant Rose-Gold / Coral Pink Gradient) */
+.cat-act-btn.btn-relight {
+  background: linear-gradient(135deg, #ff5c8a 0%, #e91e63 100%);
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(120, 10, 40, 0.4);
+  box-shadow: 0 6px 20px rgba(233, 30, 99, 0.35);
+}
+.cat-act-btn.btn-relight:hover {
+  transform: translateY(-3px) scale(1.04);
+  background: linear-gradient(135deg, #ff759f 0%, #d81b60 100%);
+  box-shadow: 0 10px 28px rgba(233, 30, 99, 0.5);
+  border-color: #ffffff;
+}
+
+/* Button 2: Next Gift: Letter (Deep Royal Orchid / Violet Gradient - Primary CTA) */
+.cat-act-btn.btn-next-letter {
+  background: linear-gradient(135deg, #ab47bc 0%, #7b1fa2 100%);
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(45, 10, 60, 0.4);
+  box-shadow: 0 6px 22px rgba(123, 31, 162, 0.38);
+}
+.cat-act-btn.btn-next-letter:hover {
+  transform: translateY(-3px) scale(1.05);
+  background: linear-gradient(135deg, #ba68c8 0%, #6a1b9a 100%);
+  box-shadow: 0 10px 30px rgba(123, 31, 162, 0.55);
+  border-color: #ffffff;
+}
+
+/* Button 3: Back to Gifts (Rich Rose-Raspberry Gradient) */
+.cat-act-btn.btn-back-gifts {
+  background: linear-gradient(135deg, #ff4081 0%, #c2185b 100%);
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(120, 10, 40, 0.4);
+  box-shadow: 0 6px 20px rgba(194, 24, 91, 0.35);
+}
+.cat-act-btn.btn-back-gifts:hover {
+  transform: translateY(-3px) scale(1.04);
+  background: linear-gradient(135deg, #ff5c8a 0%, #ad1457 100%);
+  box-shadow: 0 10px 28px rgba(194, 24, 91, 0.5);
+  border-color: #ffffff;
+}
+
+.cat-act-btn:active {
+  transform: scale(0.96);
+}
+
+.act-btn-icon {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+.act-btn-text {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+@media (max-width: 640px) {
   .cat-video-popup-card {
-    padding: 14px 10px;
-    gap: 8px;
+    padding: 16px 12px;
+    gap: 10px;
+    border-radius: 24px;
   }
   .cat-video-caption {
-    font-size: 1.05rem;
+    font-size: 1.15rem;
   }
-  .cat-birthday-video {
-    max-height: 36vh;
+  .cat-video-frame {
+    width: 100%;
+    border-radius: 16px;
   }
   .cat-video-actions-row {
-    gap: 6px;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
   }
-  .cat-video-actions-row button {
-    padding: 7px 12px;
-    font-size: 0.88rem;
-    flex: 1 1 130px;
+  .cat-act-btn {
+    width: 100%;
+    padding: 10px 18px;
+    font-size: 0.92rem;
   }
 }
 
