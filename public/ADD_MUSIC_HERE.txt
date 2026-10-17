@@ -1,7 +1,0 @@
-🎵 Place your music file here!
-
-To add background music to the birthday experience:
-1. Add any MP3 file named `music.mp3` to this `/public` folder
-2. The audio toggle button in the top-right corner will play it on click
-
-Recommended: A soft, dreamy instrumental piece (e.g. Lo-fi, Studio Ghibli style, or gentle piano)
