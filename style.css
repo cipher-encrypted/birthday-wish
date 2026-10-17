@@ -1306,6 +1306,257 @@ html, body {
   opacity: 0.9;
 }
 
+/* ─── CAT BIRTHDAY VIDEO POPUP MODAL (BOX 2 FINALE) ─── */
+.cat-video-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(12px, 2.5vh, 20px);
+  box-sizing: border-box;
+  background: rgba(30, 8, 20, 0.78);
+  backdrop-filter: blur(8px);
+  animation: fadeInBackdrop 0.35s ease;
+}
+.cat-video-overlay.hidden {
+  display: none !important;
+}
+
+@keyframes fadeInBackdrop {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.cat-video-popup-card {
+  position: relative;
+  width: 96vw;
+  max-width: 490px;
+  max-height: 92vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border: 3.5px solid #ff7597;
+  border-radius: 28px;
+  box-shadow: 0 25px 65px rgba(233, 30, 99, 0.35), 0 0 30px rgba(255, 182, 193, 0.45);
+  padding: clamp(16px, 2.5vh, 22px) clamp(14px, 3vw, 22px);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  animation: cardPopIn 0.45s cubic-bezier(0.34, 1.45, 0.64, 1);
+  box-sizing: border-box;
+}
+
+/* Custom scrollbar inside card if screen is very short */
+.cat-video-popup-card::-webkit-scrollbar {
+  width: 6px;
+}
+.cat-video-popup-card::-webkit-scrollbar-thumb {
+  background: #ffb2c9;
+  border-radius: 10px;
+}
+
+.cat-video-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid #b71c1c;
+  background: #ffffff;
+  color: #b71c1c;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease, background 0.2s ease;
+  z-index: 10;
+}
+.cat-video-close:hover {
+  transform: scale(1.15) rotate(90deg);
+  background: #ffebee;
+}
+
+.cat-video-pill-badge {
+  background: linear-gradient(135deg, #ff4081, #d81b60);
+  color: #ffffff;
+  font-family: 'Chewy', 'Fredoka', cursive, sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  padding: 4px 16px;
+  border-radius: 50px;
+  box-shadow: 0 3px 10px rgba(216, 27, 96, 0.3);
+  margin-top: -2px;
+}
+
+.cat-video-caption {
+  font-family: 'Chewy', 'Lilita One', 'Fredoka', cursive, sans-serif;
+  font-size: clamp(1.12rem, 2.8vw, 1.38rem);
+  color: #9c1424;
+  margin: 0;
+  line-height: 1.35;
+  text-shadow: 0 1px 2px rgba(255, 105, 180, 0.2);
+  padding: 0 14px;
+}
+
+.cat-video-frame {
+  position: relative;
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #0d0c13;
+  border: 3px solid #ff80ab;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), inset 0 0 12px rgba(255, 128, 171, 0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cat-birthday-video {
+  width: 100%;
+  max-height: 42vh;
+  display: block;
+  object-fit: contain;
+  border-radius: 17px;
+  background: #000000;
+}
+
+/* Sound / Unmute Overlay Pill */
+.cat-sound-toggle-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  z-index: 6;
+  background: rgba(25, 15, 25, 0.88);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  border: 2px solid #ff80ab;
+  border-radius: 50px;
+  padding: 6px 14px;
+  font-family: 'Fredoka', 'Poppins', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.cat-sound-toggle-btn:hover {
+  transform: scale(1.08);
+}
+.cat-sound-toggle-btn.muted-pulse {
+  background: linear-gradient(135deg, #e91e63, #ff4081);
+  border-color: #ffebee;
+  animation: soundPulseGlow 1.4s ease-in-out infinite alternate;
+}
+@keyframes soundPulseGlow {
+  0% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 64, 129, 0.6); }
+  100% { transform: scale(1.08); box-shadow: 0 0 20px rgba(255, 64, 129, 0.95); }
+}
+
+/* Center Play Overlay Icon when Paused */
+.cat-play-overlay-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 58px;
+  height: 58px;
+  background: rgba(233, 30, 99, 0.85);
+  border: 2.5px solid #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 1.6rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  animation: pulseIcon 1.2s ease-in-out infinite alternate;
+}
+.cat-play-overlay-icon.hidden {
+  display: none !important;
+}
+@keyframes pulseIcon {
+  0% { transform: translate(-50%, -50%) scale(0.95); }
+  100% { transform: translate(-50%, -50%) scale(1.08); }
+}
+
+/* Wish Box Below Video */
+.cat-video-wish-card {
+  width: 100%;
+  background: #fff8fa;
+  border: 2px solid #ff7597;
+  border-radius: 20px;
+  padding: 10px 16px;
+  box-shadow: 0 4px 14px rgba(233, 30, 99, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+}
+.cat-video-wish-card .wish-main-text {
+  text-align: center;
+  width: 100%;
+}
+.cat-video-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.cat-btn-next {
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-family: 'Chewy', 'Fredoka', cursive;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, #8e24aa, #ba68c8);
+  color: #ffffff;
+  border: 2px solid #4a148c;
+  box-shadow: 0 4px 12px rgba(142, 36, 170, 0.3);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  white-space: nowrap;
+}
+.cat-btn-next:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(142, 36, 170, 0.45);
+}
+
+@media (max-width: 480px) {
+  .cat-video-popup-card {
+    padding: 14px 10px;
+    gap: 8px;
+  }
+  .cat-video-caption {
+    font-size: 1.05rem;
+  }
+  .cat-birthday-video {
+    max-height: 36vh;
+  }
+  .cat-video-actions-row {
+    gap: 6px;
+  }
+  .cat-video-actions-row button {
+    padding: 7px 12px;
+    font-size: 0.88rem;
+    flex: 1 1 130px;
+  }
+}
+
 /* Generic Modal Card */
 .gift-modal-card {
   background: #ffffff;

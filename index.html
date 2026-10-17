@@ -714,6 +714,51 @@
           <span>🕯️ Tap any candle to blow it out, or tap the cake / "CLICK ME" tag to make a wish! 🎂</span>
         </div>
       </div>
+
+      <!-- Special Delivery Cat Birthday Video Popup Modal (Box 2 Finale) -->
+      <div id="cat-video-modal" class="cat-video-overlay hidden" onclick="handleCatVideoOverlayClick(event)">
+        <div class="cat-video-popup-card" onclick="event.stopPropagation()">
+          <!-- Close Button -->
+          <button class="cat-video-close" onclick="closeCatVideoModal()" title="Close Video">✕</button>
+
+          <!-- Top Pill Badge -->
+          <div class="cat-video-pill-badge">
+            <span>🐱🐾 PURR-FECT BIRTHDAY SURPRISE 🐾🐱</span>
+          </div>
+
+          <!-- Cute Caption -->
+          <h3 class="cat-video-caption">Special delivery from the cat squad for Sona! 🐱🎂✨</h3>
+
+          <!-- Video Frame with Sound & Play Controls -->
+          <div class="cat-video-frame" onclick="toggleCatVideoPlay(event)">
+            <video id="cat-birthday-video" class="cat-birthday-video" playsinline preload="auto" loop>
+              <source src="assets/cat-birthday.mp4" type="video/mp4">
+              Your browser does not support HTML5 video.
+            </video>
+
+            <!-- Sound / Unmute Overlay Pill Button -->
+            <button id="cat-sound-toggle-btn" class="cat-sound-toggle-btn" onclick="toggleCatVideoSound(event)" title="Toggle Sound">
+              <span id="cat-sound-icon">🔊</span>
+              <span id="cat-sound-text">Sound On</span>
+            </button>
+
+            <!-- Centered Play Icon when Paused -->
+            <div id="cat-play-overlay-icon" class="cat-play-overlay-icon hidden">
+              <span>▶</span>
+            </div>
+          </div>
+
+          <!-- Celebration Wish Card Below Video -->
+          <div class="cat-video-wish-card">
+            <p class="wish-main-text">🎉 "May your year be as sweet, bright, and magical as you are, Sona! May all your dreams come true!" 💖🍰🌸</p>
+            <div class="cat-video-actions-row">
+              <button class="cake-btn-again" onclick="resetCake()">🕯️ Relight Candles</button>
+              <button class="cat-btn-next" onclick="goToLetterFromCake()">💌 Next Gift: Letter 🌸</button>
+              <button class="cake-btn-back" onclick="closeCakeModal()">💖 Back to Gifts</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Special Box 3: Love & Birthday Letter Modal (Matching User Reference Image) -->

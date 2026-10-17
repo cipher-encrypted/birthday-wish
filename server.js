@@ -19,6 +19,10 @@ const MIME_TYPES = {
   '.gif': 'image/gif',
   '.svg': 'image/svg+xml',
   '.ico': 'image/x-icon',
+  '.mp4': 'video/mp4',
+  '.webm': 'video/webm',
+  '.mp3': 'audio/mpeg',
+  '.wav': 'audio/wav',
 };
 
 const server = http.createServer((req, res) => {
@@ -46,8 +50,28 @@ const server = http.createServer((req, res) => {
     const ext = path.extname(safePath).toLowerCase();
     const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
+    // Support HTTP Range requests for video/audio streaming
+    const range = req.headers.range;
+    if (range && (ext === '.mp4' || ext === '.webm' || ext === '.mp3' || ext === '.wav')) {
+      const parts = range.replace(/bytes=/, '').split('-');
+      const start = parseInt(parts[0], 10);
+      const end = parts[1] ? parseInt(parts[1], 10) : stats.size - 1;
+      const chunkSize = (end - start) + 1;
+      const fileStream = fs.createReadStream(safePath, { start, end });
+      res.writeHead(206, {
+        'Content-Range': `bytes ${start}-${end}/${stats.size}`,
+        'Accept-Ranges': 'bytes',
+        'Content-Length': chunkSize,
+        'Content-Type': contentType,
+      });
+      fileStream.pipe(res);
+      return;
+    }
+
     res.writeHead(200, {
       'Content-Type': contentType,
+      'Content-Length': stats.size,
+      'Accept-Ranges': 'bytes',
       'Cache-Control': 'no-cache, no-store, must-revalidate',
     });
 

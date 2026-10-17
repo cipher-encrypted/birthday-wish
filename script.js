@@ -351,6 +351,7 @@ function openCakeModal() {
 }
 
 function closeCakeModal() {
+  closeCatVideoModal();
   const modal = document.getElementById('cake-modal');
   if (modal) modal.classList.add('hidden');
 }
@@ -383,17 +384,136 @@ function makeCakeWish(e) {
   const archText = document.getElementById('cake-arch-text');
   if (archText) archText.textContent = "HAPPY BIRTHDAY VAISHU! 🎉";
 
-  // Hide hint and show celebration ribbon
+  // Hide hint and show celebration ribbon on cake stage
   const hint = document.getElementById('cake-footer-hint');
   if (hint) hint.style.display = 'none';
 
+  const banner = document.getElementById('cake-wish-banner');
+  if (banner) banner.classList.remove('hidden');
+
+  // Reveal Cat Squad Birthday Video Popup Modal
   setTimeout(() => {
-    const banner = document.getElementById('cake-wish-banner');
-    if (banner) banner.classList.remove('hidden');
-  }, 300);
+    openCatVideoModal();
+  }, 450);
+}
+
+/* ─── CAT BIRTHDAY VIDEO POPUP MODAL LOGIC ─── */
+function openCatVideoModal() {
+  const modal = document.getElementById('cat-video-modal');
+  if (!modal) return;
+  modal.classList.remove('hidden');
+  launchConfetti();
+  playCatBirthdayVideo();
+}
+
+function playCatBirthdayVideo() {
+  const video = document.getElementById('cat-birthday-video');
+  if (!video) return;
+
+  video.currentTime = 0;
+  // Attempt unmuted autoplay first
+  video.muted = false;
+
+  const playPromise = video.play();
+  if (playPromise !== undefined) {
+    playPromise.then(() => {
+      updateCatSoundUI(false);
+      const playIcon = document.getElementById('cat-play-overlay-icon');
+      if (playIcon) playIcon.classList.add('hidden');
+    }).catch((err) => {
+      // Browser autoplay policy prevented unmuted audio; fallback to muted autoplay
+      console.log('Autoplay unmuted blocked by browser policy, falling back to muted:', err);
+      video.muted = true;
+      video.play().then(() => {
+        updateCatSoundUI(true);
+        const playIcon = document.getElementById('cat-play-overlay-icon');
+        if (playIcon) playIcon.classList.add('hidden');
+      }).catch((playErr) => {
+        console.warn('Video play blocked:', playErr);
+        updateCatSoundUI(true);
+      });
+    });
+  }
+}
+
+function toggleCatVideoSound(e) {
+  if (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  const video = document.getElementById('cat-birthday-video');
+  if (!video) return;
+
+  video.muted = !video.muted;
+  if (video.paused) {
+    video.play().catch(err => console.log(err));
+  }
+  updateCatSoundUI(video.muted);
+}
+
+function updateCatSoundUI(isMuted) {
+  const btn = document.getElementById('cat-sound-toggle-btn');
+  const icon = document.getElementById('cat-sound-icon');
+  const text = document.getElementById('cat-sound-text');
+  if (!btn) return;
+
+  if (isMuted) {
+    btn.classList.add('muted-pulse');
+    if (icon) icon.textContent = '🔇';
+    if (text) text.textContent = 'Tap for Sound 🎵';
+  } else {
+    btn.classList.remove('muted-pulse');
+    if (icon) icon.textContent = '🔊';
+    if (text) text.textContent = 'Sound On';
+  }
+}
+
+function toggleCatVideoPlay(e) {
+  if (e) {
+    if (e.target.closest && e.target.closest('#cat-sound-toggle-btn')) {
+      return;
+    }
+  }
+  const video = document.getElementById('cat-birthday-video');
+  const playIcon = document.getElementById('cat-play-overlay-icon');
+  if (!video) return;
+
+  if (video.paused) {
+    video.play().catch(err => console.log(err));
+    if (playIcon) playIcon.classList.add('hidden');
+  } else {
+    video.pause();
+    if (playIcon) playIcon.classList.remove('hidden');
+  }
+}
+
+function closeCatVideoModal() {
+  const modal = document.getElementById('cat-video-modal');
+  if (modal) modal.classList.add('hidden');
+
+  const video = document.getElementById('cat-birthday-video');
+  if (video) {
+    video.pause();
+    video.currentTime = 0;
+  }
+  const playIcon = document.getElementById('cat-play-overlay-icon');
+  if (playIcon) playIcon.classList.add('hidden');
+}
+
+function handleCatVideoOverlayClick(e) {
+  if (e.target.id === 'cat-video-modal') {
+    closeCatVideoModal();
+  }
+}
+
+function goToLetterFromCake() {
+  closeCatVideoModal();
+  closeCakeModal();
+  openMysteryBox(3);
 }
 
 function resetCake() {
+  closeCatVideoModal();
   isWishMade = false;
   blownCandlesCount = 0;
 
